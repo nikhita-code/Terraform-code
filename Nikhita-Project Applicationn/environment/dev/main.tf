@@ -1,12 +1,15 @@
-locals = {
+locals {
   common_tags = {
-    Environment =  var.env
+    #Environment =  var.env
     Project = "FTR" 
   }
-}
+} 
 
-modules s3 {
+
+module s3 {
    source = "../../modules/s3"
+   env = var.env
    s3_bucket_names = var.s3_bucket_names
-   common_tags = locals.common_tags
+   tags = local.common_tags
+
 }
