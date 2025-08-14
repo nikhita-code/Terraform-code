@@ -4,12 +4,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_s3_bucket" "sample" {
-   for_each = 
-   bucket = "nikhita-sample-b1"
-   tags = {
-      Name = "apple_bucket"
-      Environment = "Dev"
+resource "aws_s3_bucket" "this" {
+   for_each = toset(var.s3_bucket_names)
+   bucket = var.each
+   tags = merge{
+      var.tags, "Name" = "${each.value}-${var.env}"
    }
 }
 
