@@ -7,3 +7,7 @@ variable "tags" {
   type = map(string)
   default {}
 }
+
+variable "env" {
+  type = string
+}
