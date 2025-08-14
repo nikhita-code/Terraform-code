@@ -5,6 +5,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "sample" {
+   for_each = 
    bucket = "nikhita-sample-b1"
    tags = {
       Name = "apple_bucket"
