@@ -10,4 +10,5 @@ variable "tags" {
 
 variable "env" {
   type = string
+  default =  "dev"
 }
