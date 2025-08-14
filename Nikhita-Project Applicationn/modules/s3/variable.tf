@@ -5,7 +5,6 @@ variable "s3_bucket_names" {
 
 variable "tags" {
   type = map(string)
-  default {}
 }
 
 variable "env" {
