@@ -1,7 +1,7 @@
 variable "ami" {
    type = string
 }
-variable "isntance_names" {
+variable "instance_names" {
    type = list(string)
 }
 
