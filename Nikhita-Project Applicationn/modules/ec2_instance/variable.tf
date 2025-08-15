@@ -1,4 +1,4 @@
-variable "amik" {
+variable "ami" {
    type = list(string)
 }
 
@@ -10,3 +10,6 @@ variable "key_pair_nm" {
     type = string
 }
 
+variable "tags" {
+    type = map(string)
+}
