@@ -4,3 +4,8 @@ resource "aws_vpc" "this" {
    enable_dns_hostnames = true
    tags = var.tags
 }
+
+
+resource "aws_subnet" "public" {
+   
+}
