@@ -9,3 +9,4 @@ output "instance_public_ip" {
 output "instance_private_ip" {
    value = { for name, inst in aws_instance.this : name => inst.private_ip }
 }
+ 
