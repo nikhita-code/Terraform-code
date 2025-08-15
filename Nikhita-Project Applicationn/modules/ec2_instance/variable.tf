@@ -1,4 +1,7 @@
 variable "ami" {
+   type = string
+}
+variable "isntance_names" {
    type = list(string)
 }
 
