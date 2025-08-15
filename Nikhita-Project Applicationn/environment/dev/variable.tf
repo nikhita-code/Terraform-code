@@ -10,7 +10,7 @@ variable "env" {
 variable "ami" {
    type = string
 }
-variable "isntance_names" {
+variable "instance_names" {
    type = list(string)
 }
 
@@ -22,6 +22,7 @@ variable "key_pair_nm" {
     type = string
 }
 
+/*
 variable "tags" {
     type = map(string)
-}
+}  */
