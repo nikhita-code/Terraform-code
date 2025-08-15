@@ -9,3 +9,4 @@ output "public_subnet_id" {
 output "private_subnet_id" {
     value = [ for s in aws_subnet.private.this : s.id ]
 }
+ 
