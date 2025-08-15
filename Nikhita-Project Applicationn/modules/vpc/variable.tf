@@ -10,6 +10,7 @@ variable "vpc_cidr" {
 
 variable "vpc_id" {
   type = string
+  default  = null
 }
 
 variable "vpc_public_cidr" {
@@ -22,24 +23,28 @@ variable "vpc_private_cidr" {
 
 variable "public_subnet_id" {
    type = string
+   default  = null
 }
 
 variable "private_subnet_id" {
    type = string
+   default  = null
 }
 
 variable "name" {
   type = string
 }
 
-variable "tags" {
+/*variable "tags" {
   type = map(string)
 }
-
+*/
 variable "igw_id" {
    type = string
+   default  = null
 }
 
 variable "nat_gateway_id" {
    type = string
+   default  = null
 }
