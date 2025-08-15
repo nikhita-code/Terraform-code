@@ -16,3 +16,8 @@ variable "key_pair_nm" {
 variable "tags" {
     type = map(string)
 }
+
+variable "env" {
+    type = string
+    default = "dev"
+}
