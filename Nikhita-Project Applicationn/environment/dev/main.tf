@@ -5,7 +5,7 @@ locals {
   }
 } 
 
-
+# Secrity Group module
 module "security_groups" {
    source = "../../module/security_groups"
    vpc_id  = var.vpc_id
@@ -14,6 +14,7 @@ module "security_groups" {
    vpc_public_cidr = var.vpc_private_cidr
 }
 
+# VPC Module
 module "vpc" {
    source = "../../module/vpc"
    vpc_cidr = var.vpc_cidr
@@ -29,7 +30,7 @@ module "vpc" {
 }
 
 
-
+#EC2 Module
 module "ec2_instance" {
    source = "../../module/ec2_instance"
    env = var.env
@@ -38,21 +39,20 @@ module "ec2_instance" {
    instance_names = var.instance_names
    instance_type = var.instance_type
    subnet_id  = var.public_subnet_id
-   vpc_security_group_ids  = [ var.security_group_ids ]
-   iam_instance_profile = var.instance_profile_name
+   vpc_security_group_ids  = [module.security_groups.bastion_sg_id]
+   iam_instance_profile = module.instance_profile_name
    tags = local.common_tags
-   security_group_ids = [ ]
 }
 
-
+#S3 Module
 module "s3" {
    source = "../../module/s3"
    env = var.env
    s3_bucket_names = var.s3_bucket_names
    tags = local.common_tags
-
 }
 
+#IAM Module
 module "iam" {
    source = "../../module/iam"
    role_name = var.role_name
@@ -60,21 +60,22 @@ module "iam" {
    instance_profile_name = var.instance_profile_name
 }
 
+#Bastian Host
 module "bastion_host" {
    source = "../../module/bastion_host"
    env = var.env
    ami = var.ami
    key_pair_nm = var.key_pair_nm
-   instance_names = var.instance_names
+   instance_names = var.instance_names[bastioan_host] #need to write bastion host 
    instance_type = var.instance_type
-   subnet_id  = var.public_subnet_id
-   vpc_security_group_ids  = var.vpc_security_group_ids
-   iam_instance_profile = var.instance_profile_name
+   subnet_id  = module.vpc.public_subnet_id
+   vpc_security_group_ids  = var.vpc_security_group_ids module.security_groups.bastion_sg_id]
+   iam_instance_profile = var.instance_profile_name module.iam.instance_profile_name
    tags = local.common_tags
    security_group_ids = [ ]
 }
 
-
+#RDS Module
 module "rds" {
   source = "../../module/rds"
   db_instance_identifier = var.db_instance_identifier
@@ -84,7 +85,7 @@ module "rds" {
   db_alloct_storage  =  var.db_alloct_storage
   db_username            = var.db_username
   db_password            = var.db_password
-  db_subnet_group_name =  var.db_subnet_group_name
-  vpc_security_group_ids = var.vpc_security_group_ids.server_rds_sg_id
+  db_subnet_group_name =  var.db_subnet_group_name module.vpc.public_subnet_id
+  vpc_security_group_ids = var.vpc_security_group_ids.server_rds_sg_id [module.security_groups.rds_sg_id]
   tags                   = var.tags
 }
