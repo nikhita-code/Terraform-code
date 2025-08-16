@@ -26,3 +26,23 @@ variable "env" {
     type = string
     default = "dev"
 }
+
+variable "vpc_security_group_ids" {
+  type = list(string)
+  default = null
+}
+
+variable "subnet_id" {
+  type = string
+}
+
+variable "public_subnet_id" {
+   type = string
+   default  = null
+}
+
+/*
+variable "instance_name" {
+   type = string
+}
+*/
