@@ -32,12 +32,34 @@ variable "db_password" {
     sensitive = true
 }
 
-
-variable "tags" {
-  type = map(string)
+variable "db_subnet_group_name" { 
+   type = string 
 }
 
+variable "vpc_security_group_ids" {
+  type = list(string)
+  default = null
+}
+
+variable "tags" {
+  description = "A map of tags to apply to resources"
+  type        = map(string)
+  default = {
+    Name        = "app-server"
+    Environment = "dev"
+  }
+}
 variable "env" {
   type = string
   default =  "dev"
+}
+
+variable "public_subnet_id" {
+   type = string
+   default  = null
+}
+
+variable "private_subnet_id" {
+   type = string
+   default  = null
 }
