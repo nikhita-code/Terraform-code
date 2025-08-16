@@ -10,12 +10,10 @@ resource "aws_db_instance" "rds_db" {
    vpc_security_group_ids = aws_security_group.rds.id
    skip_final_snapshot   = true 
    publicly_accessible  = false 
-   tags = merge(
-      var.tags, { Name = "${each.value}-${var.env}" }
-   )
+   tags = var.tags
 }
 
 
 resource "aws_db_subnet_group" "rds_db_subnet_gp" {
-   subnet_ids = aws_subnet.private.private_subnet_id
+   subnet_ids = var.private_subnet_id 
 }
