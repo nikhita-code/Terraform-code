@@ -7,7 +7,7 @@ resource "aws_db_instance" "rds_db" {
    username = var.db_username
    password = var.db_password
    db_subnet_group_name = aws_db_subnet_group.rds_db_subnet_gp.name
-   vpc_security_group_ids = aws_security_group.rds.id
+   vpc_security_group_ids = var.vpc_security_group_ids
    skip_final_snapshot   = true 
    publicly_accessible  = false 
    tags = var.tags
@@ -15,5 +15,5 @@ resource "aws_db_instance" "rds_db" {
 
 
 resource "aws_db_subnet_group" "rds_db_subnet_gp" {
-   subnet_ids = var.private_subnet_id 
+   subnet_ids = [ var.private_subnet_id ]
 }
