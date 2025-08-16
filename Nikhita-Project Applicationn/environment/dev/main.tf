@@ -5,16 +5,6 @@ locals {
   }
 } 
 
-# Secrity Group module
-module "security_groups" {
-   source = "../../module/security_groups"
-   vpc_id  = var.vpc_id
-   bastion_cidr    = var.bastion_cidr
-   vpc_private_cidr = var.vpc_private_cidr
-   vpc_public_cidr = var.vpc_private_cidr
-}
-
-# VPC Module
 module "vpc" {
    source = "../../module/vpc"
    vpc_cidr = var.vpc_cidr
@@ -29,6 +19,27 @@ module "vpc" {
   # tags = local.common_tags
 }
 
+# Secrity Group module
+module "security_groups" {
+   source = "../../module/security_groups"
+   vpc_id  = module.vpc.vpc_id
+   bastion_cidr    = var.bastion_cidr
+   vpc_private_cidr = var.vpc_private_cidr
+   vpc_public_cidr = var.vpc_private_cidr
+}
+
+module "bastion_host" {
+   source = "../../module/bastion_host"
+   env = var.env
+   ami = var.ami
+   key_pair_nm = var.key_pair_nm
+   instance_names = var.instance_names #need to write bastion host 
+   subnet_id = module.vpc.public_subnet_id
+   instance_type = var.instance_type
+   vpc_security_group_ids  = [module.security_groups.bastion_sg_id]
+   tags = local.common_tags
+}
+
 
 #EC2 Module
 module "ec2_instance" {
@@ -38,11 +49,13 @@ module "ec2_instance" {
    key_pair_nm = var.key_pair_nm
    instance_names = var.instance_names
    instance_type = var.instance_type
-   subnet_id  = var.public_subnet_id
+   subnet_id  = module.vpc.public_subnet_id
    vpc_security_group_ids  = [module.security_groups.bastion_sg_id]
-   iam_instance_profile = module.instance_profile_name
+   iam_instance_profile = module.iam.instance_profile_name
    tags = local.common_tags
+   security_group_ids = []
 }
+
 
 #S3 Module
 module "s3" {
@@ -60,20 +73,6 @@ module "iam" {
    instance_profile_name = var.instance_profile_name
 }
 
-#Bastian Host
-module "bastion_host" {
-   source = "../../module/bastion_host"
-   env = var.env
-   ami = var.ami
-   key_pair_nm = var.key_pair_nm
-   instance_names = var.instance_names[bastioan_host] #need to write bastion host 
-   instance_type = var.instance_type
-   subnet_id  = module.vpc.public_subnet_id
-   vpc_security_group_ids  = var.vpc_security_group_ids module.security_groups.bastion_sg_id]
-   iam_instance_profile = var.instance_profile_name module.iam.instance_profile_name
-   tags = local.common_tags
-   security_group_ids = [ ]
-}
 
 #RDS Module
 module "rds" {
@@ -85,7 +84,8 @@ module "rds" {
   db_alloct_storage  =  var.db_alloct_storage
   db_username            = var.db_username
   db_password            = var.db_password
-  db_subnet_group_name =  var.db_subnet_group_name module.vpc.public_subnet_id
-  vpc_security_group_ids = var.vpc_security_group_ids.server_rds_sg_id [module.security_groups.rds_sg_id]
+  db_subnet_group_name =  var.db_subnet_group_name
+  private_subnet_id      = module.vpc.private_subnet_id
+  vpc_security_group_ids_rds = [module.security_groups.rds_sg_id]
   tags                   = var.tags
 }
