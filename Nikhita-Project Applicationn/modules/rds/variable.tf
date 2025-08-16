@@ -1,6 +1,6 @@
 variable "db_instance_identifier" {
     type = string
-    default = "my-db-instance"
+    default = "dev-rds-instance"
 }
 
 variable "db_engine" {
