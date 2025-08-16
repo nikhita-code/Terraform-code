@@ -1,6 +1,6 @@
 variable "db_instance_identifier" {
     type = string
-    default = "dev-rds-instance"
+    default = "my-db-instance"
 }
 
 variable "db_engine" {
@@ -31,7 +31,7 @@ variable "db_password" {
     type = string
     sensitive = true
 }
- 
+
 variable "db_subnet_group_name" { 
    type = string 
 }
@@ -61,5 +61,9 @@ variable "public_subnet_id" {
 
 variable "private_subnet_id" {
    type = string
-   default  = null
+
+}
+
+variable "vpc_security_group_ids_rds" {
+  type = list(string)
 }
