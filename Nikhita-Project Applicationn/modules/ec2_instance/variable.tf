@@ -27,11 +27,11 @@ variable "subnet_id" {
 }
 
 variable "vpc_security_group_ids" {
-  type = string
+   type = list(string)
 }
 
 variable "security_group_ids" {
-  type = string
+   type = list(string)
 }
 
 variable "instance_profile_name" {
