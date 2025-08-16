@@ -15,7 +15,6 @@ resource "aws_security_group" "bastion_sg_rule" {
       cidr_blocks  = [var.vpc_public_cidr] 
     }
     
- 
     egress {
       from_port = 0
       to_port = 0
@@ -43,29 +42,4 @@ resource "aws_security_group" "rds" {
 
 }
 
-/*
-resource "aws_security_group" "app_sg_rule" {
-    vpc_id = var.vpc_id
-    name = "ec2_appserver_host_machine_sg"
-    ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      cidr_blocks = aws_subnet.vpc_public_cidr
-    }
 
-    ingress {
-      from_port = 80
-      to_port = 80
-      protocol = "tcp"
-      cidr_blocks = aws_subnet.vpc_public_cidr
-    }
-    egress {
-      from_port = 0
-      to_port = 0
-      protocol = "-1"
-      cidr_blocks = "0.0.0.0/0"
-    }
-
-}
-*/
