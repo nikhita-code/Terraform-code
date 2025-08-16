@@ -1,5 +1,5 @@
 output "instance_id" {
-   value = { for name, inst in aws_instanc.app_server : name => inst.id }
+   value = { for name, inst in aws_instance.app_server : name => inst.id }
 }
 
 output "instance_public_ip" {
