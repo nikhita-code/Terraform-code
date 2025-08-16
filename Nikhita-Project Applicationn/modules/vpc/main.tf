@@ -37,7 +37,7 @@ resource "aws_nat_gateway" "private_nig" {
    subnet_id = aws_subnet.public.id
   #  tags = merge(var.tags, { Name = "${var.env}-nat-gw" })
 
-}
+} 
 
 resource "aws_route_table" "public_rt" {
    vpc_id = aws_vpc.main_vpc.id
