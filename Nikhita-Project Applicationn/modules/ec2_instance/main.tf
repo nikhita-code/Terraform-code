@@ -4,12 +4,11 @@ resource "aws_instance" "app_server" {
    ami           = var.ami
    instance_type = var.instance_type
    key_name      = var.key_pair_nm
-   subnet_id =  aws_subnet.public.public_subnet_id
-   security_groups = aws_security_group.sg_rule
+   subnet_id =  var.public_subnet_id
+   vpc_security_group_ids = var.security_group_ids
+   iam_instance_profile = var.instance_profile_name
    tags = merge(
       var.tags, { Name = "${each.value}-${var.env}" }
    )
 
 }
-
-
