@@ -13,3 +13,4 @@ variable "instance_profile_name" {
     type = string
     default   = "my-ec2-instance-profile"
 }
+ 
