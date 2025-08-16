@@ -11,10 +11,10 @@ private_subnet_id = null   # will be created by VPC module
 vpc_id            = null   # fresh VPC
 igw_id            = null
 nat_gateway_id    = null
-name              = "main_vpc"
+
 
 #Secrity Groups
-bastion_cidr = "10.0.1.50"
+bastion_cidr = "10.0.1.0/24"
 vpc_security_group_ids = []  # will use module outputs
 
 
@@ -24,7 +24,8 @@ ami = "ami-020cba7c55df1f615" #ubuntu AMI
 instance_type = "t2.micro"
 key_pair_nm = "taerraform-demo-codespace"
 security_group_ids = []        # will use module outputs
-iam_instance_profile = "my-ec2-instance-profile"
+subnet_id = " "
+
 
 #IAM 
 role_name = "my-ec2-role"
